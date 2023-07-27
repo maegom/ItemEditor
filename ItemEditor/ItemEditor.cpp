@@ -109,20 +109,84 @@ void DeleteItem(Item* Array, int& Count)
 	//임시 저장 파일 주소 초기화
 	FILE* FileStream = nullptr;
 
-	//ItemList.itl 파일에 (쓰기,바이너리)
-	fopen_s(&FileStream, "ItemList.itl", "wb");
-
-	//FileStream에 값이 있으면 수행
-	if (FileStream)
+	while (true)
 	{
-		//fwrite(쓰고 싶은 데이터가 저장된 메모리 시작주소, 데이터 사이즈, 몇개의 데이터 저장할지, 데이터를 쓸 파일 포인터)
-		*Array = {};
-		fwrite(&Count, sizeof(Count), 1, FileStream); //아이템 정보
-		fwrite(Array, sizeof(Item), Count, FileStream); //아이템 정보
-		Count = NULL;
+		system("cls");
+		std::cout << "1. 전체 삭제" << std::endl;
+		std::cout << "2. 개별 삭제" << std::endl;
+		std::cout << "3. 삭제 취소" << std::endl;
 
-		fclose(FileStream);
+		int Select = 0;
+		std::cin >> Select;
+
+		if (Select < 1 || Select >3)
+		{
+			continue;
+		}
+		//전체 삭제
+		if (Select == 1)
+		{
+			//ItemList.itl 파일에 (쓰기,바이너리)
+			fopen_s(&FileStream, "ItemList.itl", "wb");
+
+			//FileStream에 값이 있으면 수행
+			if (FileStream)
+			{
+				//fwrite(쓰고 싶은 데이터가 저장된 메모리 시작주소, 데이터 사이즈, 몇개의 데이터 저장할지, 데이터를 쓸 파일 포인터)
+				*Array = {};
+				Count = NULL;
+				fwrite(&Count, sizeof(Count), 1, FileStream); //아이템 정보
+				fwrite(Array, sizeof(Item), Count, FileStream); //아이템 정보
+
+				fclose(FileStream);
+				break;
+			}
+		}
+		//선택 삭제
+		else if (Select == 2)
+		{
+			// 저장된 아이템 리스트 출력 
+			for (int i = 0; i < Count; ++i)
+			{
+				//이름 출력 
+				std::cout << "이름 : " << Array[i].Name << "\t종류 : ";
+
+				//종류 출력 
+				switch (Array[i].Type)
+				{
+				case EItemType::Weapon:
+					std::cout << "무기\n";
+					break;
+				case EItemType::Armor:
+					std::cout << "방어구\n";
+					break;
+				}
+
+				//가격 출력
+				std::cout << "Price : " << Array[i].Price << "\tSell : "
+					<< Array[i].Sell << std::endl;
+			}
+
+			std::cout << "=========삭제할 아이템 이름을 입력하시오========" << std::endl;
+			std::cout << "이름 : ";
+
+
+			Item	Modify[100] = {};
+
+			std::cin >> Modify[0].Name;
+
+			break;
+		}
+		else if (Select == 3)
+		{
+			break;
+		}
 	}
+
+
+
+
+	
 }
 
 void ModifyItem(Item* Array, int Count)
@@ -160,7 +224,7 @@ void ModifyItem(Item* Array, int Count)
 	std::cin >> Modify[0].Name;
 
 	//2. 아이템 종류 선택
-	system("cls");
+	//system("cls");
 	std::cout << "1. 무기" << std::endl;
 	std::cout << "2. 방어구" << std::endl;
 	std::cout << "아이템 종류를 선택하세요 : ";
