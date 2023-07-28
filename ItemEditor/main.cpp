@@ -52,6 +52,14 @@ int main()
 			CreateItem(item, Count);
 			break;
 		case EMainMenu::DeleteItem: //2
+			if (Count == 0)
+			{
+				std::cout << "삭제할 아이템이 없습니다. " << std::endl;
+				system("pause");
+				break;
+			}
+			
+
 			DeleteItem(item, Count);
 			break;
 		case EMainMenu::ModifyItem: //3
@@ -60,6 +68,7 @@ int main()
 			break;
 		case EMainMenu::OutputItem: //4
 			OutputItemList(item, Count);
+			system("pause");
 			break;
 		case EMainMenu::SaveItem:   //5
 			SaveItemList(item, Count);

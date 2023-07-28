@@ -16,7 +16,6 @@ void CreateItem(Item* Array, int& Count)  //아이템 저장 개수 수정을 위해 call by
 	std::cin >> Array[Count].Name;
 
 	//2. 아이템 종류 선택
-	system("cls");
 	std::cout << "1. 무기" << std::endl;
 	std::cout << "2. 방어구" << std::endl;
 	std::cout << "아이템 종류를 선택하세요 : ";
@@ -61,7 +60,6 @@ void OutputItemList(Item* Array, int Count)
 		std::cout << "Price : " << Array[i].Price << "\tSell : " 
 			<< Array[i].Sell << std::endl;
 	}
-	system("pause");
 }
 
 // 파일 저장 
@@ -84,6 +82,8 @@ void SaveItemList(Item* Array, int Count)
 	}
 }
 
+
+
 //파일 불러오기 
 void LoadItemList(Item* Array, int& Count)
 {
@@ -104,10 +104,12 @@ void LoadItemList(Item* Array, int& Count)
 	}
 }
 
+//아이템 삭제
 void DeleteItem(Item* Array, int& Count)
 {
 	//임시 저장 파일 주소 초기화
 	FILE* FileStream = nullptr;
+
 
 	while (true)
 	{
@@ -126,6 +128,7 @@ void DeleteItem(Item* Array, int& Count)
 		//전체 삭제
 		if (Select == 1)
 		{
+
 			//ItemList.itl 파일에 (쓰기,바이너리)
 			fopen_s(&FileStream, "ItemList.itl", "wb");
 
@@ -145,35 +148,33 @@ void DeleteItem(Item* Array, int& Count)
 		//선택 삭제
 		else if (Select == 2)
 		{
-			// 저장된 아이템 리스트 출력 
-			for (int i = 0; i < Count; ++i)
-			{
-				//이름 출력 
-				std::cout << "이름 : " << Array[i].Name << "\t종류 : ";
-
-				//종류 출력 
-				switch (Array[i].Type)
-				{
-				case EItemType::Weapon:
-					std::cout << "무기\n";
-					break;
-				case EItemType::Armor:
-					std::cout << "방어구\n";
-					break;
-				}
-
-				//가격 출력
-				std::cout << "Price : " << Array[i].Price << "\tSell : "
-					<< Array[i].Sell << std::endl;
-			}
+			//현재 목록 출력 
+			OutputItemList( Array,Count);
 
 			std::cout << "=========삭제할 아이템 이름을 입력하시오========" << std::endl;
 			std::cout << "이름 : ";
 
-
 			Item	Modify[100] = {};
 
 			std::cin >> Modify[0].Name;
+
+			for (int i = 0; i < Count; i++)
+			{
+				if (*Array[i].Name == *Modify[0].Name)
+				{
+					for (int j = i; j < Count-i; j++)
+					{
+					*Array[j].Name = *Array[j + 1].Name;
+					Array[j].Type = Array[j + 1].Type;
+					Array[j].Price = Array[j + 1].Price;
+					Array[j].Sell = Array[j + 1].Sell;
+					}
+					Count--;
+					break;
+				}
+				
+				
+			}
 
 			break;
 		}
