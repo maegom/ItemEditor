@@ -33,6 +33,19 @@ void SetItemData(Item* Array, int Index)
 
 	Array[Index].Type = (EItemType)(ItemType - 1); // 0 = 무기 , 1 = 방어구 이기에 맞춰줌
 
+	//3. 장착 종류 선택
+	std::cout << "1. 장착불가" << std::endl;
+	std::cout << "2. 무기" << std::endl;
+	std::cout << "3. 방어구" << std::endl;
+	std::cout << "장착부위를 선택하세요 : ";
+	std::cin >> ItemType;
+
+	Array[Index].EquipType = (EEquipType)(ItemType - 2); // 0 = 무기 , 1 = 방어구
+	
+	//4. 아이템 옵션 값 설정
+	std::cout << "Option : ";
+	std::cin >> Array[Index].Option;
+
 	//3. 가격 
 	std::cout << "Price : ";
 	std::cin >> Array[Index].Price;
@@ -72,6 +85,14 @@ void OutputItemList(Item* Array, int Count)
 			std::cout << "방어구\n";
 			break;
 		}
+
+		//옵션값 출력
+		if(Array[i].Type == EItemType::Weapon)
+		std::cout << "공격력 : " << Array[i].Option << std::endl;
+		else if(Array[i].Type == EItemType::Armor)
+		std::cout << "방어력 : " << Array[i].Option << std::endl;
+		else //아직 무기, 방어구 외 옵션 구현 안됨
+		std::cout << "옵션값 : " << Array[i].Option << std::endl;
 
 		//가격 출력
 		std::cout << "Price : " << Array[i].Price << "\tSell : " 
@@ -184,9 +205,6 @@ void DeleteItem(Item* Array, int& Count)
 			}
 
 			//현재 목록 출력 
-
-			std::cout << "============아이템 목록===========" << std::endl;
-
 			OutputItemList(Array, Count);
 
 			std::cout << "=========삭제할 아이템 정보를 입력하시오========" << std::endl;

@@ -9,13 +9,24 @@ enum class EItemType
 	Armor
 };
 
-// 아이템 정보 (이름, 타입, 가격, 팔때)
+//장착 타입
+enum EEquipType
+{
+	Equip_None = -1,
+	Equip_Weapon,
+	Equip_Armor,
+	Equip_End
+};
+
+// 아이템 정보  
 struct Item
 {
-	char	Name[32];
-	EItemType	Type;
-	int		Price;
-	int		Sell;
+	char	Name[32]; //이름
+	EItemType	Type; //타입
+	EEquipType	EquipType; //장착 타입
+	int			Option; //옵션값
+	int		Price; //살때가격
+	int		Sell; //판매가격
 };
 
 
