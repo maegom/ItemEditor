@@ -17,3 +17,5 @@ struct Item
 	int		Price;
 	int		Sell;
 };
+
+

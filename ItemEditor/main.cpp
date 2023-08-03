@@ -58,7 +58,6 @@ int main()
 				system("pause");
 				break;
 			}
-			
 
 			DeleteItem(item, Count);
 			break;
