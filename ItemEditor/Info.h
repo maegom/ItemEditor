@@ -21,8 +21,8 @@ enum EEquipType
 // 아이템 정보  
 struct Item
 {
-	char	Name[32]; //이름
 	EItemType	Type; //타입
+	char	Name[32]; //이름	
 	EEquipType	EquipType; //장착 타입
 	int			Option; //옵션값
 	int		Price; //살때가격
